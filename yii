@@ -1,0 +1,26 @@
+server {
+    charset utf-8;
+    client_max_body_size 128M;
+
+    listen 80;
+
+    server_name skydream.ml;
+    root        /var/www/html/web;
+    index       index.php;
+
+    access_log  /var/log/nginx/yii/access.log;
+    error_log   /var/log/nginx/yii/error.log;
+
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include fastcgi.conf;
+        fastcgi_pass   127.0.0.1:9372;
+    }
+
+    location ~ /\.(ht|svn|git) {
+        deny all;
+    }
+}
